@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThriftS.Test.Contract", "ThriftS.Test.Contract\ThriftS.Test.Contract.csproj", "{8A1D51C5-081B-4995-B92F-EB52DEADBBCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThriftS.Test.Client", "ThriftS.Test.Client\ThriftS.Test.Client.csproj", "{C1F8F7F5-3712-4A64-A112-3DD8E5F79435}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThriftS.Test.Server", "ThriftS.Test.Server\ThriftS.Test.Server.csproj", "{20197250-83F2-4709-857A-5B7CCAA0781C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A1D51C5-081B-4995-B92F-EB52DEADBBCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A1D51C5-081B-4995-B92F-EB52DEADBBCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A1D51C5-081B-4995-B92F-EB52DEADBBCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A1D51C5-081B-4995-B92F-EB52DEADBBCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1F8F7F5-3712-4A64-A112-3DD8E5F79435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1F8F7F5-3712-4A64-A112-3DD8E5F79435}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1F8F7F5-3712-4A64-A112-3DD8E5F79435}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1F8F7F5-3712-4A64-A112-3DD8E5F79435}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20197250-83F2-4709-857A-5B7CCAA0781C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20197250-83F2-4709-857A-5B7CCAA0781C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20197250-83F2-4709-857A-5B7CCAA0781C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20197250-83F2-4709-857A-5B7CCAA0781C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
