@@ -10,6 +10,7 @@ Target Framework Version
 Features
 ----
 * 无需编写[IDL](http://thrift.apache.org/docs/idl)代码，使用语言自身习惯开发。
+* 依据原始编码规则实现序列化和反序列化机制，从而使数据实体不受TBase继承所约束。
 * 无Thrift代码修改，不受Thrift版本更新影响。
 * 使用二进制编码，支持大数据gzip压缩。
 * 提供Http端口监控服务运行情况。
