@@ -1,10 +1,10 @@
 # ThriftS
-----
-_ThriftS_基于Apache Thrift开发，旨在为.NET和JAVA提供无缝交互。
+
+_ThriftS_基于Apache Thrift开发，旨在为.NET和JAVA提供更简单、更高效、更轻量的RPC通信机制。Thrift作为多语言通信框架，直接使用会有较大的侵入性，而web services等传统的交互方式不能满足我们的性能要求，ThriftS提供了另一种选择。
 
 Target Framework Version
 ----
-_ThriftS_.NET部分基于.NET Framework 4.0编译，可在.NET 4.0或更高版本的32位或64位环境中使用。它本身不依赖任何第三方类库，非常干净。
+_ThriftS_.NET部分基于.NET Framework 4.0编译，可在.NET 4.0或更高版本的32位或64位环境中使用。除Thrift外它本身不依赖任何第三方类库，非常干净。
 _ThriftS_ Java部分基于JDK 1.6编译。
 
 特点
