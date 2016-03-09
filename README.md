@@ -4,8 +4,8 @@ _ThriftS_基于Apache Thrift开发，旨在为.NET和JAVA提供更简单、更�
 
 Target Framework Version
 ----
-* _ThriftS_.NET部分基于.NET Framework 4.0编译，可在.NET 4.0或更高版本的32位或64位环境中使用。除Thrift外它本身不依赖任何第三方类库，非常干净。
-* _ThriftS_ Java部分基于JDK 1.6编译。
+* _ThriftS_ for .NET基于.NET Framework 4.0开发，可在.NET 4.0或更高版本的32位或64位环境中使用。除Thrift外它本身不依赖任何第三方类库，非常干净。
+* _ThriftS_ for JAVA基于JDK 1.6开发，由于Java本身的泛型擦除机制，引入了[classmate](https://github.com/FasterXML/java-classmate)组件支持泛型序列化。
 
 Features
 ----
