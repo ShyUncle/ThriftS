@@ -1,24 +1,24 @@
-# ThriftS
+﻿# ThriftS
 
-_ThriftS_基于Apache Thrift开发，旨在为.NET和JAVA提供更简单、更高效、更轻量的RPC通信机制。Thrift作为多语言通信框架，直接使用会有较大的侵入性，而web services等传统的交互方式不能满足我们的性能要求，ThriftS提供了另一种选择。
+RPC is a classical server-client model, where client sends a request to server, and server replies results to client. _ThriftS_ is a micro RPC framework based on Apache Thrift, it is designed to be as simple as possible, and it should be lightweight. Target language is c# and java.
 
-Target Framework Version
+Runtime
 ----
-* _ThriftS_ for .NET基于.NET Framework 4.0开发，可在.NET 4.0或更高版本的32位或64位环境中使用。除Thrift外它本身不依赖任何第三方类库，非常干净。
-* _ThriftS_ for JAVA基于JDK 1.6开发，由于Java本身的泛型擦除机制，引入了[classmate](https://github.com/FasterXML/java-classmate)组件支持泛型序列化。
+* For .NET, writting in c#, will run on .NET Framework 4.0, no dependencies except Thrift.
+* For Java，will run on JDK 1.6, because Java generics erase mechanism itself, uses[classmate](https://github.com/FasterXML/java-classmate) to support generics serialization.
 
 Features
 ----
-* 无需编写[IDL](http://thrift.apache.org/docs/idl)代码，使用语言自身习惯开发。
-* 依据原始编码规则实现序列化和反序列化机制，从而使数据实体不受TBase继承所约束。
-* 无Thrift代码修改，不受Thrift版本更新影响。
-* 使用二进制编码，支持大数据gzip压缩。
-* 提供Http端口监控服务运行情况。
-* C#客户端提供连接池支持。
-* 后续支持AOP方法拦截和自定义序列化。
+* No [interface description language](http://thrift.apache.org/docs/idl).
+* Based on the original encoding rules to implement the serialization and deserialization.
+* No Thrift code changed.
+* Using binary encoding, support for large data gzip compression.
+* Provide monitoring service uses Http.
+* Support connection pool in c# client.
 
 Quick Start
 ----
+I think it's good time for an example.
 
 Contract
 ```c#
