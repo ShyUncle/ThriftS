@@ -4,12 +4,18 @@ _ThriftS_基于Apache Thrift开发，旨在为.NET和JAVA提供更简单、更�
 
 Target Framework Version
 ----
-_ThriftS_.NET部分基于.NET Framework 4.0编译，可在.NET 4.0或更高版本的32位或64位环境中使用。除Thrift外它本身不依赖任何第三方类库，非常干净。
-_ThriftS_ Java部分基于JDK 1.6编译。
+* _ThriftS_ for .NET基于.NET Framework 4.0开发，可在.NET 4.0或更高版本的32位或64位环境中使用。除Thrift外它本身不依赖任何第三方类库，非常干净。
+* _ThriftS_ for JAVA基于JDK 1.6开发，由于Java本身的泛型擦除机制，引入了[classmate](https://github.com/FasterXML/java-classmate)组件支持泛型序列化。
 
-特点
+Features
 ----
-无需编写IDL代码，使用语言自身习惯开发。
+* 无需编写[IDL](http://thrift.apache.org/docs/idl)代码，使用语言自身习惯开发。
+* 依据原始编码规则实现序列化和反序列化机制，从而使数据实体不受TBase继承所约束。
+* 无Thrift代码修改，不受Thrift版本更新影响。
+* 使用二进制编码，支持大数据gzip压缩。
+* 提供Http端口监控服务运行情况。
+* C#客户端提供连接池支持。
+* 后续支持AOP方法拦截和自定义序列化。
 
 Quick Start
 ----
