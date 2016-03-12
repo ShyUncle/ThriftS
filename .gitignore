@@ -234,3 +234,35 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Above list is from github Java ignore list
+# : https://github.com/github/gitignore/blob/master/Java.gitignore
+
+# Following list is customized for Eclipse/Maven project
+# : https://gist.github.com/leafriend/7819d721150dd0f770da
+
+# Ignore all log files & backup files
+*.log
+*.bak
+
+# Ignore all hidden files except Git ignore file
+.*
+!.gitignore
+
+# Ignore generated file directory
+/target/
+
+*.iml
