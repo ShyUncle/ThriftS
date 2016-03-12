@@ -4,16 +4,16 @@ RPC is a classical server-client model, where client sends a request to server, 
 
 Runtime
 ----
-* For .NET, writting in c#, will run on .NET Framework 4.0, no dependencies except Thrift.
-* For Java，will run on JDK 1.6, because Java generics erase mechanism itself, uses[classmate](https://github.com/FasterXML/java-classmate) to support generics serialization.
+* For .NET, writting in c#, and built on .NET Framework 4.0, no dependencies except Thrift.
+* For Java, built on java development kit 1.6. Because java generics erase mechanism itself, uses [classmate](https://github.com/FasterXML/java-classmate) to support generics serialization.
 
 Features
 ----
-* No [interface description language](http://thrift.apache.org/docs/idl).
+* No [interface description language](http://thrift.apache.org/docs/idl), using attributes/annotations instead of the Thrift IDL.
 * Based on the original encoding rules to implement the serialization and deserialization.
 * No Thrift code changed.
 * Using binary encoding, support for large data gzip compression.
-* Provide monitoring service uses Http.
+* Provide service monitoring using HTTP protocol.
 * Support connection pool in c# client.
 
 Quick Start
