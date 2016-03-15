@@ -20,7 +20,7 @@ Quick Start
 ----
 I think it's good time for an example.
 
-Contract
+c# Contract
 ```c#
 [ThriftSContract]
 public interface IEmployeeService
@@ -30,18 +30,37 @@ public interface IEmployeeService
 }
 ```
 
-Service side
+java Contract
+```java
+@ThriftSContract
+public interface IEmployeeService {
+    @ThriftSOperation
+    void saveEmployee(Employee emp);
+}
+```
+
+c# Service side
 ```c#
 public class EmployeeService : IEmployeeService
 {
     public void SaveEmployee(Employee emp)
     {
-        Console.WriteLine("client save employee. Id: {0},Name:{1}.", emp.EmployeeId, emp.EmployeeName);
+        Console.WriteLine("client save employee. Id: {0},Name: {1}.", emp.EmployeeId, emp.EmployeeName);
     }
 }
 
 var server = new ThriftSServer();
 server.Start();
+```
+
+java Service side
+```java
+public class EmployeeService implements IEmployeeService {
+    @Override
+    public void saveEmployee(Employee emp){
+        System.out.println("client save employee. Id: %s,Name: %s.", emp.getEmployeeId(), emp.getEmployeeName());
+    }
+}
 ```
 
 Service side configuration: ThriftS.config
