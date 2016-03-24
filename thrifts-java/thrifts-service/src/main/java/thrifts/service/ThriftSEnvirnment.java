@@ -1,19 +1,19 @@
 package thrifts.service;
 
 public final class ThriftSEnvirnment {
-    private static IThriftXLogger logger = null;
+    private static IThriftSLogger logger = null;
 
     static
     {
         logger = new ThriftSLogger();
     }
 
-    public static IThriftXLogger getLogger()
+    public static IThriftSLogger getLogger()
     {
         return logger;
     }
 
-    public static void setLogger(IThriftXLogger value)
+    public static void setLogger(IThriftSLogger value)
     {
         logger = value;
     }

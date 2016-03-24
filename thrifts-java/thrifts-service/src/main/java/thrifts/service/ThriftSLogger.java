@@ -1,6 +1,6 @@
 package thrifts.service;
 
-public class ThriftSLogger implements IThriftXLogger {
+public class ThriftSLogger implements IThriftSLogger {
 
     public void Debug(String format, Object ... args) {
         System.out.printf(format, args);
