@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ThriftS.Service;
+using ThriftS.Test.Contract;
 
 namespace ThriftS.Test.Server
 {
@@ -18,6 +19,7 @@ namespace ThriftS.Test.Server
                 ThriftSEnvirnment.Logger = new MyThriftSLogger();
 
                 var server = new ThriftSServer();
+                // server.RegisterService(typeof(IEmployeeService), typeof(EmployeeService));
                 server.Start();
                 Console.ReadLine();
 

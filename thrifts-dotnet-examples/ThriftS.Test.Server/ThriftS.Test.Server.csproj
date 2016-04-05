@@ -65,6 +65,7 @@
     <None Include="App.config" />
     <None Include="ThriftS.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
