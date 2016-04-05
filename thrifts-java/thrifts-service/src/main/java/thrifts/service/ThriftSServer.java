@@ -53,9 +53,9 @@ public class ThriftSServer {
         {
             //throw new ThriftXException(string.Format("Missing ThriftXContractAttribute in '{0}'.", contractType));
         }
-        //Todo: Î´¶¨Òåannotation
+        //Todo: æœªå®šä¹‰annotation
 
-        //È¡ÆõÔ¼Ãû³Æ
+        //å–å¥‘çº¦åç§°
         String serviceName = contractAnnotation.serviceName();
         if(serviceName == null || serviceName.isEmpty())
         {
@@ -66,7 +66,7 @@ public class ThriftSServer {
 
         LocalCache.ServiceMap.put(serviceName, new TreeMap<String, ServiceMetaInfo>(String.CASE_INSENSITIVE_ORDER));
 
-        //±éÀúÆõÔ¼·½·¨
+        //éå†å¥‘çº¦æ–¹æ³•
         Method[] methods = contractType.getDeclaredMethods();
         for (Method method : methods) {
             System.out.println("declared method name : " + method.getName());

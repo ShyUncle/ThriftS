@@ -37,7 +37,7 @@ final class TProtocolExtension {
     private static void writeField(TProtocol protocol, short fieldId, String fieldName, Object value) throws TException, ThriftSException, IllegalAccessException {
         if (value == null) return;
 
-        //javaÀàĞÍ²Á³ı
+        //javaç±»å‹æ“¦é™¤
         Class<?> sourceType = value.getClass();
 
         byte fieldType = TypeExtension.toThriftType(typeResolver.resolve(sourceType));
@@ -95,7 +95,7 @@ final class TProtocolExtension {
                 }
                 protocol.writeListBegin(new TList(TType.STRUCT, list.size()));
                 for (Object item : list) {
-                    //ÅÅ³ıºóºÍcount²»Ò»ÖÂ
+                    //æ’é™¤åå’Œcountä¸ä¸€è‡´
                     if (item == null) {
                         throw new ThriftSException("The item must be not null.");
                     }
@@ -124,7 +124,7 @@ final class TProtocolExtension {
 //                        TypeExtension.toThriftType((Class<?>) genericArgs[1]),
 //                        map.size()));
                 for (Object key : map.keySet()) {
-                    //ÅÅ³ıºóºÍcount²»Ò»ÖÂ
+                    //æ’é™¤åå’Œcountä¸ä¸€è‡´
                     if (key == null || map.get(key) == null) {
                         throw new ThriftSException("The key or value must be not null.");
                     }
@@ -183,7 +183,7 @@ final class TProtocolExtension {
                 break;
             }
 
-            // Ìø¹ı²»´æÔÚµÄ×Ö¶Î
+            // è·³è¿‡ä¸å­˜åœ¨çš„å­—æ®µ
             if (dicProps.containsKey(field.id))
             {
                 Object fieldValue = null;
@@ -296,7 +296,7 @@ final class TProtocolExtension {
                 Object result = targetType.newInstance();
                 ArrayList list = (ArrayList)result;
 
-                // Ö»¿¼ÂÇ·ºĞÍlist
+                // åªè€ƒè™‘æ³›å‹list
 //                if (targetType.IsGenericType)
 //                {
 //                    Class<?> genericType = (Class<?>)((ParameterizedType) targetType.getGenericSuperclass()).getActualTypeArguments()[0];
@@ -318,7 +318,7 @@ final class TProtocolExtension {
                 //Map<?,?> dic = (Map<?,?>)resultMap;
                 Map<Object,Object> dic = (Map<Object,Object>)resultMap;
 
-                // Ö»¿¼ÂÇ·ºĞÍmap
+                // åªè€ƒè™‘æ³›å‹map
 //                if (targetType.IsGenericType)
 //                {
 //                    Type[] genericTypes = ((ParameterizedType) targetType.getGenericSuperclass()).getActualTypeArguments();

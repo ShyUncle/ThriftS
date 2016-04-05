@@ -18,13 +18,13 @@ public final class Utils {
         return SerializerMode.Thrift;
 
         /*
-        //ÖµÀàĞÍºÍ×Ö·û´®Ê¹ÓÃprotobufĞòÁĞ»¯
+        //å€¼ç±»å‹å’Œå­—ç¬¦ä¸²ä½¿ç”¨protobufåºåˆ—åŒ–
         if(targetType.isPrimitive() || targetType == String.class)
         {
             return SerializerMode.ProtoBuf;
         }
 
-        //È¡·ºĞÍ²ÎÊı
+        //å–æ³›å‹å‚æ•°
 //        targetType.getge
 //        if(targetType is ParameterizedType)
 //        if(((ParameterizedType)targetType.getGenericType .getGenericSuperclass()).getActualTypeArguments()[0])
@@ -36,7 +36,7 @@ public final class Utils {
             }
         }
 
-        //ÓÉÓÚJProtoĞòÁĞ»¯²»ĞèÒªÔÚclass¸½¼ÓAnnotation£¬Òò´Ë²»ÄÜÏñC#ÄÇÑùÒÀ¾İAttributeÍÆ¶Ï
+        //ç”±äºJProtoåºåˆ—åŒ–ä¸éœ€è¦åœ¨classé™„åŠ Annotationï¼Œå› æ­¤ä¸èƒ½åƒC#é‚£æ ·ä¾æ®Attributeæ¨æ–­
         //if(targetType.isAnnotationPresent(Protobuf.class)){
         //    return SerializerMode.ProtoBuf;
         //}

@@ -68,7 +68,7 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
         try {
             Object result = null;
 
-            //ÊµÀı»¯·şÎñ
+            //å®ä¾‹åŒ–æœåŠ¡
             Object service = null;
             try {
                 service = serviceMetadata.getServiceHandlerType().newInstance();
@@ -76,7 +76,7 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
                 e.printStackTrace();
             }
 
-            //»ñÈ¡µ÷ÓÃ²ÎÊı
+            //è·å–è°ƒç”¨å‚æ•°
             // Class<?>[] methodParameterTypes = serviceMetadata.getMethod().getParameterTypes();
             Type[] methodParameterTypesP = serviceMetadata.getMethod().getGenericParameterTypes();
             LinkedHashMap<String,Object> invokeParameters = new LinkedHashMap<String, Object>();
@@ -90,7 +90,7 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
                     parameterType = (Class<?>)methodParameterTypesP[i];
                 }
 
-                // ÔÚ¿çÆ½Ì¨µÄÊ±ºò·şÎñ¶ËºÍ¿Í»§¶ËµÄ²ÎÊıÃû¿ÉÄÜÍêÈ«²»Ò»Ñù£¬Òò´ËÎ¨Ò»ÒÀ¾İÊÇ²ÎÊıË³Ğò£¬ÇëÇóÉÏÏÂÎÄµÄ²ÎÊıÃûÒÔ·şÎñ¶ËÎª»ù×¼¡£
+                // åœ¨è·¨å¹³å°çš„æ—¶å€™æœåŠ¡ç«¯å’Œå®¢æˆ·ç«¯çš„å‚æ•°åå¯èƒ½å®Œå…¨ä¸ä¸€æ ·ï¼Œå› æ­¤å”¯ä¸€ä¾æ®æ˜¯å‚æ•°é¡ºåºï¼Œè¯·æ±‚ä¸Šä¸‹æ–‡çš„å‚æ•°åä»¥æœåŠ¡ç«¯ä¸ºåŸºå‡†ã€‚
                 ThriftSParameter requestParameter = thriftXRequestWrapper.getParameters().get(i);
                 //requestParameter.Name = parameter.getName();
                 try {
@@ -109,7 +109,7 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
 //                            }
 //                        }else
                          if(requestParameter.getContentType().equalsIgnoreCase(ContentTypes.Protobuf)){
-                            // ¼òµ¥ÀàĞÍÓÃjprotoÓĞÎÊÌâ
+                            // ç®€å•ç±»å‹ç”¨jprotoæœ‰é—®é¢˜
                             Codec protoCodec = ProtobufProxy.create(parameterType);
                             invokeParameters.put(parameterType.getName(),protoCodec.decode(requestParameter.getValue()));
                         }
@@ -169,7 +169,7 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
 
             }
 
-            //µ÷ÓÃ·şÎñ
+            //è°ƒç”¨æœåŠ¡
             try {
                 result = serviceMetadata.getMethod().invoke(service,invokeParameters.values().toArray());
                 System.out.println(result);
@@ -177,22 +177,22 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
                 e.printStackTrace();
             }
 
-            //¼ì²é·µ»ØÖµÀàĞÍ
-            //ÓÉÓÚJavaµÄ·ºĞÍ²Á³ı£¬ĞèÒªÍ¨¹ı·½·¨µÄ·´Éä»ñÈ¡·ºĞÍ²ÎÊı
+            //æ£€æŸ¥è¿”å›å€¼ç±»å‹
+            //ç”±äºJavaçš„æ³›å‹æ“¦é™¤ï¼Œéœ€è¦é€šè¿‡æ–¹æ³•çš„åå°„è·å–æ³›å‹å‚æ•°
             Class<?> resultType = serviceMetadata.getMethod().getReturnType();
 
 
-            //Èç¹ûÊÇ·ºĞÍ¶¨Òå£¬ÔòÈ¡·ºĞÍ²ÎÊı
+            //å¦‚æœæ˜¯æ³›å‹å®šä¹‰ï¼Œåˆ™å–æ³›å‹å‚æ•°
 //            Type genericReturnType = serviceMetadata.getMethod().getGenericReturnType();
 //            if(genericReturnType instanceof ParameterizedType){
 //                resultType = (Class<?>)((ParameterizedType) genericReturnType).getActualTypeArguments()[0];
 //            }
 
-            //´æÔÚ·µ»ØÖµ
+            //å­˜åœ¨è¿”å›å€¼
             if(resultType != void.class) {
                 if (result != null) {
 
-                    //»ñÈ¡ĞòÁĞ»¯·½Ê½
+                    //è·å–åºåˆ—åŒ–æ–¹å¼
                     SerializerMode mode = Utils.GetSerializerMode(resultType);
                     ThriftSResult xResult = new ThriftSResult();
                     xResult.setCompression(ThriftSCompression.None);
@@ -207,7 +207,7 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
 //                        Schema schema = RuntimeSchema.createFrom(resultType);//(result.getClass(), String.class);
 //                        byte[] bytes =  ProtobufIOUtil.toByteArray(result, schema, buffer);
 //                        xResult.setData(bytes);
-                        //ProtobufĞòÁĞ»¯
+                        //Protobufåºåˆ—åŒ–
                         Class<? extends Object> T = result.getClass();
                         Codec protoCodec = ProtobufProxy.create(T);
 //                        Codec protoCodec = ProtobufProxy.create(resultType);
@@ -221,7 +221,7 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
                         xResult.setContentType(ContentTypes.Thrift);
                         xResult.setData(ThriftSerializer.Serialize(result));
                     } else {
-                        //JsonĞòÁĞ»¯
+                        //Jsonåºåˆ—åŒ–
                         //todo: json-smart
                         xResult.setContentType(ContentTypes.Json);
                         xResult.setData(gson.toJson(result).getBytes());

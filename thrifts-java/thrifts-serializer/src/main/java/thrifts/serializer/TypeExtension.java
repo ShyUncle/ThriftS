@@ -18,7 +18,7 @@ final class TypeExtension {
     }
 
     public static byte toThriftType(ResolvedType type) {//(Class<?> sourceType) {
-        // list也是class, 优先检测list
+        // list涔熸槸class, 浼樺厛妫�娴媗ist
         //if (sourceType == null)
         //{
         //    return TType.Void;
