@@ -43,7 +43,7 @@ namespace ThriftS.Test.Client
                     Console.WriteLine(m.MemberId);
                 }
 
-                var employee = new Employee() { EmployeeId = 18168, EmployeeName = "呵呵" };
+                var employee = new Employee() { EmployeeId = 18168, EmployeeName = "zeeman" };
                 Stopwatch sw = new Stopwatch();
 
                 sw.Start();
@@ -57,7 +57,7 @@ namespace ThriftS.Test.Client
                 Console.WriteLine("Re Save {0}ms", sw.ElapsedMilliseconds);
 
                 sw.Restart();
-                var emps = proxy.GetList(70, "抗战纪念日", DateTime.Now, true);
+                var emps = proxy.GetList(70, "", DateTime.Now, true);
                 sw.Stop();
                 Console.WriteLine("GetList {0}ms", sw.ElapsedMilliseconds);
 
@@ -97,14 +97,14 @@ namespace ThriftS.Test.Client
             }
             catch (ThriftSException ex)
             {
-                Console.WriteLine("{0} ThriftSException异常", DateTime.Now);
+                Console.WriteLine("{0} ThriftSException", DateTime.Now);
                 Console.WriteLine(ex.Message);
                 Console.WriteLine("==================");
                 Console.WriteLine(ex);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("{0} 异常", DateTime.Now);
+                Console.WriteLine("{0} Exception", DateTime.Now);
                 Console.WriteLine(ex);
             }
 
