@@ -1,7 +1,7 @@
-package thrifts.test;
+package thrifts.demo.server;
 
-import contract.IEmployeeService;
-import contract.Member;
+import thrifts.demo.contract.IEmployeeService;
+import thrifts.demo.contract.Member;
 import thrifts.common.annotations.ThriftSOperation;
 
 import java.util.ArrayList;

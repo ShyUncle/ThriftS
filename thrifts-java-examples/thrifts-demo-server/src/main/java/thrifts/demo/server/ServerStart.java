@@ -1,7 +1,7 @@
-package thrifts.test;
+package thrifts.demo.server;
 
-import contract.IEmployeeService;
-import contract.Member;
+import thrifts.demo.contract.IEmployeeService;
+import thrifts.demo.contract.Member;
 import thrifts.service.ThriftSServer;
 import thrifts.serializer.ThriftSerializer;
 import com.fasterxml.classmate.ResolvedType;
@@ -10,12 +10,11 @@ import com.fasterxml.classmate.TypeResolver;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public final class Program {
-
-    public static void main(String [ ] args){
+public class ServerStart {
+    public static void main(String[] args) {
         try {
 
-             //Type t = resolveGenericType(List.class,int.class);
+            //Type t = resolveGenericType(List.class,int.class);
 
             ThriftSServer server = new ThriftSServer();
             server.registerService(IEmployeeService.class, EmployeeService.class);
@@ -67,6 +66,4 @@ public final class Program {
             exception.printStackTrace();
         }
     }
-
-
 }

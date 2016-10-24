@@ -1,4 +1,4 @@
-package contract;
+package thrifts.demo.contract;
 
 import thrifts.common.annotations.ThriftSContract;
 import thrifts.common.annotations.ThriftSOperation;

@@ -263,6 +263,12 @@ hs_err_pid*
 !.gitignore
 
 # Ignore generated file directory
-/target/
+target/
+**/target/
 
 *.iml
+.idea
+
+.project
+.settings
+.classpath
