@@ -1,7 +1,7 @@
 package thrifts.service;
 
-import com.baidu.bjf.remoting.protobuf.Codec;
-import com.baidu.bjf.remoting.protobuf.ProtobufProxy;
+//import com.baidu.bjf.remoting.protobuf.Codec;
+//import com.baidu.bjf.remoting.protobuf.ProtobufProxy;
 import thrifts.common.*;
 import thrifts.idl.*;
 import thrifts.serializer.ThriftSerializer;
@@ -108,12 +108,12 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
 //                                invokeParameters.put(parameterType.getName(), requestParameter.getValue());
 //                            }
 //                        }else
-                         if(requestParameter.getContentType().equalsIgnoreCase(ContentTypes.Protobuf)){
+                         /*if(requestParameter.getContentType().equalsIgnoreCase(ContentTypes.Protobuf)){
                             // 简单类型用jproto有问题
                             Codec protoCodec = ProtobufProxy.create(parameterType);
                             invokeParameters.put(parameterType.getName(),protoCodec.decode(requestParameter.getValue()));
-                        }
-                        else if(requestParameter.getContentType().equalsIgnoreCase(ContentTypes.Json)) {
+                        }else*/
+                         if(requestParameter.getContentType().equalsIgnoreCase(ContentTypes.Json)) {
                              ByteArrayInputStream inputStream = new ByteArrayInputStream(requestParameter.getValue());
                              try {
                                  InputStreamReader reader = new InputStreamReader(inputStream);
@@ -201,7 +201,7 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
                     //Object mems3 = ThriftSerializer.Deserialize(resultType, listbytes);
 
                     if (mode == SerializerMode.ProtoBuf) {
-//                        LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);
+/*//                        LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);
 //                        //RuntimeSchema.getSchema(ArrayList.class,String.class);
 //                        //CollectionSchema<String>.
 //                        Schema schema = RuntimeSchema.createFrom(resultType);//(result.getClass(), String.class);
@@ -216,7 +216,7 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
                             xResult.setData(protoCodec.encode(result));
                         } catch (IOException e) {
                             e.printStackTrace();
-                        }
+                        }*/
                     } else if(mode == SerializerMode.Thrift) {
                         xResult.setContentType(ContentTypes.Thrift);
                         xResult.setData(ThriftSerializer.Serialize(result));
