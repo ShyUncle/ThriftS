@@ -6,11 +6,11 @@
 
     <parent>
         <artifactId>thrifts</artifactId>
-        <groupId>org.thrifts</groupId>
+        <groupId>org.zeeman</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.thrifts</groupId>
+    <groupId>org.zeeman</groupId>
     <artifactId>thrifts-demo</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 

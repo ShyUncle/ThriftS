@@ -4,28 +4,30 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>thrifts-demo</artifactId>
-        <groupId>org.thrifts</groupId>
+        <groupId>org.zeeman</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>org.zeeman</groupId>
     <artifactId>thrifts-demo-server</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
-            <groupId>org.thrifts</groupId>
+            <groupId>org.zeeman</groupId>
             <artifactId>thrifts-demo-contract</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
-            <groupId>org.thrifts</groupId>
+            <groupId>org.zeeman</groupId>
             <artifactId>thrifts-common</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
-            <groupId>org.thrifts</groupId>
+            <groupId>org.zeeman</groupId>
             <artifactId>thrifts-service</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
