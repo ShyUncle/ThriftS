@@ -4,8 +4,8 @@ import com.fasterxml.classmate.ResolvedType;
 import com.fasterxml.classmate.TypeResolver;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.*;
-import thrifts.common.ThriftSException;
-import thrifts.common.annotations.ThriftSMember;
+import org.zeeman.thrifts.common.ThriftSException;
+import org.zeeman.thrifts.common.annotations.ThriftSMember;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;

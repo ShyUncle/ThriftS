@@ -1,13 +1,14 @@
-package org.zeeman.thrifts.demo.contract;
+package org.zeeman.thrifts.serializer;
 
-//import com.baidu.bjf.remoting.protobuf.FieldType;
-//import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
 import org.zeeman.thrifts.common.SerializerMode;
 import org.zeeman.thrifts.common.annotations.ThriftSMember;
 import org.zeeman.thrifts.common.annotations.ThriftSModel;
 
+/**
+ * Created by zeeman on 2016/10/25.
+ */
 @ThriftSModel(SerializerMode = SerializerMode.ProtoBuf)
-public class Member {
+public class MemberMock {
     //@Protobuf(fieldType = FieldType.STRING, order = 1, required = true)
     @ThriftSMember(tag = 1)
     private String memberId;
@@ -15,7 +16,7 @@ public class Member {
     @ThriftSMember(tag = 2)
     private int age;
 
-    public Member() {
+    public MemberMock() {
     }
 
     public String getMemberId() {

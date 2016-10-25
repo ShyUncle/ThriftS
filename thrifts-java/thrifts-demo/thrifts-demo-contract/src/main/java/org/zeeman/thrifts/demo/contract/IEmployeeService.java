@@ -1,7 +1,7 @@
 package org.zeeman.thrifts.demo.contract;
 
-import thrifts.common.annotations.ThriftSContract;
-import thrifts.common.annotations.ThriftSOperation;
+import org.zeeman.thrifts.common.annotations.ThriftSContract;
+import org.zeeman.thrifts.common.annotations.ThriftSOperation;
 
 import java.util.ArrayList;
 

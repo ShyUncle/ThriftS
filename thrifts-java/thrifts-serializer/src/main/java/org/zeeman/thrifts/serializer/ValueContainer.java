@@ -1,7 +1,7 @@
 package org.zeeman.thrifts.serializer;
 
-import thrifts.common.annotations.ThriftSMember;
-import thrifts.common.annotations.ThriftSModel;
+import org.zeeman.thrifts.common.annotations.ThriftSMember;
+import org.zeeman.thrifts.common.annotations.ThriftSModel;
 
 @ThriftSModel
 final class ValueContainer<T> {

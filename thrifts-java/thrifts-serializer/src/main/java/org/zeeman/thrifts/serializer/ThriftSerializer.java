@@ -6,7 +6,7 @@ import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TStruct;
 import org.apache.thrift.transport.TIOStreamTransport;
-import thrifts.common.ThriftSException;
+import org.zeeman.thrifts.common.ThriftSException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

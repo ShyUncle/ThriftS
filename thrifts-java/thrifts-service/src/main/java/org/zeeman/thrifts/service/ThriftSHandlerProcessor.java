@@ -2,9 +2,9 @@ package org.zeeman.thrifts.service;
 
 //import com.baidu.bjf.remoting.protobuf.Codec;
 //import com.baidu.bjf.remoting.protobuf.ProtobufProxy;
-import thrifts.common.*;
-import thrifts.idl.*;
-import thrifts.serializer.ThriftSerializer;
+import org.zeeman.thrifts.common.*;
+import org.zeeman.thrifts.idl.*;
+import org.zeeman.thrifts.serializer.ThriftSerializer;
 import com.fasterxml.classmate.ResolvedType;
 import com.fasterxml.classmate.TypeResolver;
 import com.google.gson.Gson;

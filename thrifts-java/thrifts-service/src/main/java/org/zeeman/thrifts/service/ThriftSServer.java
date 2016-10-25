@@ -6,10 +6,10 @@ import org.apache.thrift.server.TThreadPoolServer;
 import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TTransportException;
-import thrifts.common.Utils;
-import thrifts.common.annotations.ThriftSContract;
-import thrifts.common.annotations.ThriftSOperation;
-import thrifts.idl.ThriftSHandler;
+import org.zeeman.thrifts.common.Utils;
+import org.zeeman.thrifts.common.annotations.ThriftSContract;
+import org.zeeman.thrifts.common.annotations.ThriftSOperation;
+import org.zeeman.thrifts.idl.ThriftSHandler;
 
 import java.lang.reflect.Method;
 import java.util.TreeMap;
