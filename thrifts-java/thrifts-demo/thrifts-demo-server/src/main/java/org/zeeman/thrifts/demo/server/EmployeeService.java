@@ -7,17 +7,14 @@ import org.zeeman.thrifts.common.annotations.ThriftSOperation;
 import java.util.ArrayList;
 
 public class EmployeeService implements IEmployeeService {
-    @Override
     public void saveMember(Member member){
         System.out.println(member.getMemberId());
     }
 
-    @Override
     public String bigString(String text) {
         return text;
     }
 
-    @Override
     public Member getMember() {
         Member member = new Member();
         member.setMemberId("0001");
@@ -25,7 +22,6 @@ public class EmployeeService implements IEmployeeService {
         return member;
     }
 
-    @Override
     public ArrayList<Member> getMemberList() {
         ArrayList<Member> list = new ArrayList<Member>();
 
