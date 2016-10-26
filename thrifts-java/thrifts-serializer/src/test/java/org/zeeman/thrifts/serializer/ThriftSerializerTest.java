@@ -54,6 +54,19 @@ public class ThriftSerializerTest {
     public void arrayTest() throws ThriftSException {
         TypeResolver typeResolver = new TypeResolver();
 
+        MemberMock memberMock = new MemberMock();
+        memberMock.setMemberId("xxx");
+
+        ArrayList<MemberMock> mems = new ArrayList<MemberMock>();
+        mems.add(memberMock);
+        byte[] listbytes = ThriftSerializer.Serialize(mems);
+
+        //Type listType = new TypeToken<ArrayList<MemberMock>>(){}.getType();
+        Object actual = ThriftSerializer.Deserialize(typeResolver.resolve(ArrayList.class, MemberMock.class), listbytes);
+        Assert.assertNotNull(actual);
+
+        ArrayList<MemberMock> actualMembers = (ArrayList<MemberMock>)actual;
+        Assert.assertEquals(actualMembers.size(), 1);
     }
 
     @Test
@@ -65,29 +78,19 @@ public class ThriftSerializerTest {
         dic.put(2, "钱");
         dic.put(3, "孙");
         byte[] dicbytes = ThriftSerializer.Serialize(dic);
-//            Type listType3 = new TypeToken<HashMap<Integer,String>>(){}.getType();
 
-
+        //Type listType3 = new TypeToken<HashMap<Integer,String>>(){}.getType();
         ResolvedType type = typeResolver.resolve(HashMap.class, Integer.class, String.class);
 
-        Object dic2 = ThriftSerializer.Deserialize(type, dicbytes);
-    }
+        Object actual = ThriftSerializer.Deserialize(type, dicbytes);
 
-    @Test
-    public void objectMapTest() throws ThriftSException {
-        TypeResolver typeResolver = new TypeResolver();
+        Assert.assertNotNull(actual);
 
-        MemberMock memberMock = new MemberMock();
-        memberMock.setMemberId("xxx");
-        byte[] memberbytes = ThriftSerializer.Serialize(memberMock);
-        Object member2 = ThriftSerializer.Deserialize(typeResolver.resolve(MemberMock.class), memberbytes);
-
-        ArrayList<MemberMock> mems = new ArrayList<MemberMock>();
-        mems.add(memberMock);
-        byte[] listbytes = ThriftSerializer.Serialize(mems);
-//            Type listType = new TypeToken<ArrayList<MemberMock>>(){}.getType();
-        Object mems3 = ThriftSerializer.Deserialize(typeResolver.resolve(ArrayList.class, MemberMock.class), listbytes);
-
+        HashMap<Integer, String> actualDic = (HashMap<Integer, String>)actual;
+        Assert.assertEquals(actualDic.size(), 3);
+        Assert.assertEquals(actualDic.get(1), "赵");
+        Assert.assertEquals(actualDic.get(2), "钱");
+        Assert.assertEquals(actualDic.get(3), "孙");
     }
 
     @Test
@@ -98,24 +101,25 @@ public class ThriftSerializerTest {
 
         MemberMock memberMock = new MemberMock();
         memberMock.setMemberId("xxx");
-        byte[] memberbytes = ThriftSerializer.Serialize(memberMock);
-        Object member2 = ThriftSerializer.Deserialize(typeResolver.resolve(MemberMock.class), memberbytes);
 
         ArrayList<MemberMock> mems = new ArrayList<MemberMock>();
         mems.add(memberMock);
-        byte[] listbytes = ThriftSerializer.Serialize(mems);
-//            Type listType = new TypeToken<ArrayList<MemberMock>>(){}.getType();
-        Object mems3 = ThriftSerializer.Deserialize(typeResolver.resolve(ArrayList.class, MemberMock.class), listbytes);
 
         HashMap<Integer, ArrayList<MemberMock>> dic3 = new HashMap<Integer, ArrayList<MemberMock>>();
         dic3.put(1, mems);
         dic3.put(2, mems);
         dic3.put(3, mems);
         byte[] dicbytes2 = ThriftSerializer.Serialize(dic3);
-//            Type listType2 = new TypeToken<HashMap<Integer,ArrayList<MemberMock>>>(){}.getType();
         ResolvedType listType2 = typeResolver.resolve(HashMap.class, Integer.class, typeResolver.resolve(ArrayList.class, MemberMock.class));
-        Object dic4 = ThriftSerializer.Deserialize(listType2, dicbytes2);
+        Object actual = ThriftSerializer.Deserialize(listType2, dicbytes2);
 
-        // map 套 map的情况
+        Assert.assertNotNull(actual);
+        HashMap<Integer, ArrayList<MemberMock>> actualMap = (HashMap<Integer, ArrayList<MemberMock>>)actual;
+        Assert.assertEquals(actualMap.size(), 3);
+    }
+
+    @Test
+    public void nestedMapTest() throws ThriftSException {
+        //todo: map in map
     }
 }
