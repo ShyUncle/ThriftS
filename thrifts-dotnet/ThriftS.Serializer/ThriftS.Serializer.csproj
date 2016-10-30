@@ -42,6 +42,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayContainer.cs" />
     <Compile Include="DateTimeHelper.cs" />
     <Compile Include="ListContainer.cs" />
     <Compile Include="MapContainer.cs" />

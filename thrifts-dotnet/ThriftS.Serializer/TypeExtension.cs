@@ -68,7 +68,8 @@ namespace ThriftS.Serializer
                 return TType.I32;
             }
             else if (sourceType == typeof(long)
-                || sourceType == typeof(DateTime))
+                || sourceType == typeof(DateTime)
+                || sourceType == typeof(DateTime?))
             {
                 return TType.I64;
             }
