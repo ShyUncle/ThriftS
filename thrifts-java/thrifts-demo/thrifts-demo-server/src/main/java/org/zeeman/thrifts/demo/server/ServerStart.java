@@ -16,8 +16,7 @@ public class ServerStart {
             server.start(80, 8384, 5, 20, 120);
 
             LOGGER.info("service started");
-        }catch (Exception exception)
-        {
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
     }

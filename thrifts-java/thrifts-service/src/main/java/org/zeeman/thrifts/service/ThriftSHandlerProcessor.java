@@ -1,5 +1,6 @@
 package org.zeeman.thrifts.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zeeman.thrifts.common.*;
@@ -36,8 +37,8 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
 
     public ThriftSResponse Process(ThriftSRequest request) throws BadRequestException, InternalServerException, InvocationException, TException {
         if (request == null
-                || request.ServiceName == null || request.ServiceName.isEmpty()
-                || request.MethodName == null || request.MethodName.isEmpty()) {
+                || StringUtils.isEmpty(request.ServiceName)
+                || StringUtils.isEmpty(request.MethodName)) {
             throw new BadRequestException(request, "The ServiceName or MethodName must be not null.");
         }
 

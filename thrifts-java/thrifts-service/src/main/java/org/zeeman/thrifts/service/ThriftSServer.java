@@ -61,16 +61,15 @@ public class ThriftSServer {
         if (contractAnnotation == null) {
             throw new ThriftSException(String.format("Missing annotation(ThriftXContract) in '%s'.", contractType.getName()));
         }
-        //Todo: 未定义annotation
 
-        //取契约名称
+        //get service name
         String serviceName = Utils.getServiceName(contractType);
         serviceName = serviceName.toLowerCase();
         LOGGER.debug("Register service: ", serviceName);
 
         LocalCache.ServiceMap.put(serviceName, new TreeMap<String, ServiceMetaInfo>(String.CASE_INSENSITIVE_ORDER));
 
-        //遍历契约方法
+        //foreach methods
         Method[] methods = contractType.getDeclaredMethods();
         for (Method method : methods) {
             LOGGER.debug("declared method name : " + method.getName());
