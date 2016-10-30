@@ -11,6 +11,7 @@ public class ServerStart {
     public static void main(String[] args) {
         try {
             ThriftSServer server = new ThriftSServer();
+            //server.setHandlerSerializer();
             server.registerService(EmployeeService.class, EmployeeServiceImpl.class);
             server.start(80, 8384, 5, 20, 120);
 

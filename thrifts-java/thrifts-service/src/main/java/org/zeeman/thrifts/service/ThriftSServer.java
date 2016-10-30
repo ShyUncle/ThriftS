@@ -24,6 +24,8 @@ public class ThriftSServer {
 
     private TThreadPoolServer threadPoolServer = null;
 
+    private ThriftSHandlerSerializer handlerSerializer = new ThriftSHandlerSerializerImpl();
+
     private int port = 0;
 
     public int getPort() {
@@ -32,6 +34,14 @@ public class ThriftSServer {
 
     public void setPort(int value) {
         this.port = value;
+    }
+
+    public ThriftSHandlerSerializer getHandlerSerializer() {
+        return handlerSerializer;
+    }
+
+    public void setHandlerSerializer(ThriftSHandlerSerializer handlerSerializer) {
+        this.handlerSerializer = handlerSerializer;
     }
 
     public ThriftSServer() {
@@ -104,7 +114,7 @@ public class ThriftSServer {
 
         this.threadPoolServer = new TThreadPoolServer(args);
 
-        this.multiplexedProcessor.registerProcessor("ThriftSHandler", new ThriftSHandler.Processor(new ThriftSHandlerProcessor()));
+        this.multiplexedProcessor.registerProcessor("ThriftSHandler", new ThriftSHandler.Processor(new ThriftSHandlerProcessor(this.handlerSerializer)));
 
         LOGGER.info(
                 "Starting thriftS server. ThriftPort:{}, HttpPort:{}, Version:{}",

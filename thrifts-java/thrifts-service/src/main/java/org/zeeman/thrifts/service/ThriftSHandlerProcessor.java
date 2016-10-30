@@ -1,34 +1,23 @@
 package org.zeeman.thrifts.service;
 
-//import com.baidu.bjf.remoting.protobuf.Codec;
-//import com.baidu.bjf.remoting.protobuf.ProtobufProxy;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zeeman.thrifts.common.*;
 import org.zeeman.thrifts.idl.*;
-import org.zeeman.thrifts.serializer.ThriftSerializer;
-import com.fasterxml.classmate.ResolvedType;
-import com.fasterxml.classmate.TypeResolver;
-//import com.google.gson.Gson;
-//import com.google.gson.GsonBuilder;
 import org.apache.thrift.TException;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
     private final static Logger LOGGER = LoggerFactory.getLogger(ThriftSHandlerProcessor.class);
 
-    //private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+    private ThriftSHandlerSerializer handlerSerializer;
 
-    public ThriftSHandlerProcessor() {
-
+    public ThriftSHandlerProcessor(ThriftSHandlerSerializer handlerSerializer) {
+        this.handlerSerializer = handlerSerializer;
     }
 
     public ThriftSResponse Ping(ThriftSRequest request) throws BadRequestException, InternalServerException, TException {
@@ -102,63 +91,13 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
                     if (requestParameter.isHasValue() == false) {
                         invokeParameters.put(parameterType.getName(), null);
                     } else {
+                        Object val = this.handlerSerializer.Deserialize(
+                                requestParameter.getContentType(),
+                                methodParameterTypesP[i],
+                                requestParameter.getValue()
+                        );
 
-//                        if(requestParameter.getContentType().equalsIgnoreCase(ContentTypes.Thrift)) {
-//                            if(parameterType == String.class) {
-//                                invokeParameters.put(parameterType.getName(), requestParameter.getValue());
-//                            }
-//                        }else
-                         /*if(requestParameter.getContentType().equalsIgnoreCase(ContentTypes.Protobuf)){
-                            // 简单类型用jproto有问题
-                            Codec protoCodec = ProtobufProxy.create(parameterType);
-                            invokeParameters.put(parameterType.getName(),protoCodec.decode(requestParameter.getValue()));
-                        }else*/
-                        /*if (requestParameter.getContentType().equalsIgnoreCase(ContentTypes.Json)) {
-                            ByteArrayInputStream inputStream = new ByteArrayInputStream(requestParameter.getValue());
-                            try {
-                                InputStreamReader reader = new InputStreamReader(inputStream);
-                                invokeParameters.put(parameterType.getName(), gson.fromJson(reader, parameterType));
-                            } finally {
-                                inputStream.close();
-                            }
-                        } else */
-
-                        if (requestParameter.getContentType().equalsIgnoreCase(ContentTypes.Thrift)) {
-
-                            TypeResolver typeResolver = new TypeResolver();
-                            ResolvedType ptype = null;
-
-                            if (methodParameterTypesP[i] instanceof ParameterizedType) {
-                                ParameterizedType typeTemp = (ParameterizedType) methodParameterTypesP[i];
-                                if (typeTemp.getRawType() == ArrayList.class) {
-                                    ptype = typeResolver.resolve(ArrayList.class, typeTemp.getActualTypeArguments());
-                                } else if (typeTemp.getRawType() == HashMap.class) {
-                                    ptype = typeResolver.resolve(HashMap.class, typeTemp.getActualTypeArguments());
-                                }
-                                //parameterType =typeResolver.resolve(((ParameterizedType) methodParameterTypesP[i]).getRawType(), ((ParameterizedType) methodParameterTypesP[i]).getActualTypeArguments());
-                            } else {
-                                ptype = typeResolver.resolve(methodParameterTypesP[i]);
-                            }
-
-                            Object val = ThriftSerializer.Deserialize(ptype, requestParameter.getValue());
-
-//                             if(methodParameterTypesP[i] instanceof ParameterizedType){
-//                                 val = ThriftSerializer.Deserialize(requestParameter.getValue(), parameterType, ((ParameterizedType)methodParameterTypesP[i]).getActualTypeArguments());
-//                             }
-//                             else{
-//                                 val = ThriftSerializer.Deserialize(requestParameter.getValue(), parameterType, null);
-//                             }
-                            invokeParameters.put(parameterType.getName(), val);
-
-
-//                             Type resultTypeP = methodParameterTypesP
-//                             if (resultTypeP instanceof ParameterizedType) {
-////                            ParameterizedType aType = (ParameterizedType) resultTypeP;
-////                            Object o = ThriftSerializer.Deserialize(re, resultType, aType.getActualTypeArguments());
-//                             }
-                        } else {
-                            //throw new Unsupported
-                        }
+                        invokeParameters.put(parameterType.getName(), val);
                     }
                 } catch (Exception e) {
 
@@ -194,34 +133,15 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
                     ThriftSResult xResult = new ThriftSResult();
                     xResult.setCompression(ThriftSCompression.None);
 
-                    //byte[] listbytes = ThriftSerializer.Serialize(result);
-                    //Object mems3 = ThriftSerializer.Deserialize(resultType, listbytes);
-
                     if (mode == SerializerMode.ProtoBuf) {
-/*//                        LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);
-//                        //RuntimeSchema.getSchema(ArrayList.class,String.class);
-//                        //CollectionSchema<String>.
-//                        Schema schema = RuntimeSchema.createFrom(resultType);//(result.getClass(), String.class);
-//                        byte[] bytes =  ProtobufIOUtil.toByteArray(result, schema, buffer);
-//                        xResult.setData(bytes);
-                        //Protobuf序列化
-                        Class<? extends Object> T = result.getClass();
-                        Codec protoCodec = ProtobufProxy.create(T);
-//                        Codec protoCodec = ProtobufProxy.create(resultType);
                         xResult.setContentType(ContentTypes.Protobuf);
-                        try {
-                            xResult.setData(protoCodec.encode(result));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }*/
                     } else if (mode == SerializerMode.Thrift) {
                         xResult.setContentType(ContentTypes.Thrift);
-                        xResult.setData(ThriftSerializer.Serialize(result));
-                    }/* else {
-                        //Json序列化
+                    } else {
                         xResult.setContentType(ContentTypes.Json);
-                        xResult.setData(gson.toJson(result).getBytes());
-                    }*/
+                    }
+                    xResult.setData(this.handlerSerializer.Serialize(xResult.getContentType(), result));
+
                     xResponse.setResult(xResult);
                 }
             }
