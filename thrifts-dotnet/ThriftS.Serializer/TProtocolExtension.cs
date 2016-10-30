@@ -66,7 +66,7 @@ namespace ThriftS.Serializer
                     protocol.WriteI32(Convert.ToInt32(value));
                     break;
                 case TType.I64:
-                    if (sourceType == typeof(DateTime))
+                    if (sourceType == typeof(DateTime)|| sourceType == typeof(DateTime?))
                     {
                         protocol.WriteI64(DateTimeHelper.ToUnixTimestamp(Convert.ToDateTime(value)));
                     }
@@ -168,7 +168,7 @@ namespace ThriftS.Serializer
                     {
                         dicProps[field.ID].SetValue(result, new Guid(fieldValue.ToString()));
                     }
-                    else if (dicProps[field.ID].PropertyType == typeof(DateTime))
+                    else if (dicProps[field.ID].PropertyType == typeof(DateTime)||dicProps[field.ID].PropertyType == typeof(DateTime?))
                     {
                         dicProps[field.ID].SetValue(result, DateTimeHelper.ToDateTime((long)fieldValue));
                     }
