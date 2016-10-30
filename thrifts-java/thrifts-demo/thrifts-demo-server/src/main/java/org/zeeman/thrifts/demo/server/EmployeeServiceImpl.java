@@ -1,12 +1,12 @@
 package org.zeeman.thrifts.demo.server;
 
-import org.zeeman.thrifts.demo.contract.IEmployeeService;
+import org.zeeman.thrifts.demo.contract.EmployeeService;
 import org.zeeman.thrifts.demo.contract.Member;
 import org.zeeman.thrifts.common.annotations.ThriftSOperation;
 
 import java.util.ArrayList;
 
-public class EmployeeService implements IEmployeeService {
+public class EmployeeServiceImpl implements EmployeeService {
     public void saveMember(Member member){
         System.out.println(member.getMemberId());
     }

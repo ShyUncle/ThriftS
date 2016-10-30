@@ -6,7 +6,7 @@ import org.zeeman.thrifts.common.annotations.ThriftSOperation;
 import java.util.ArrayList;
 
 @ThriftSContract
-public interface IEmployeeService {
+public interface EmployeeService {
     @ThriftSOperation
     void saveMember(Member member);
 

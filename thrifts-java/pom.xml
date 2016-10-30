@@ -13,6 +13,7 @@
     <modules>
         <module>thrifts-common</module>
         <module>thrifts-serializer</module>
+        <module>thrifts-client</module>
         <module>thrifts-service</module>
         <module>thrifts-demo</module>
     </modules>
