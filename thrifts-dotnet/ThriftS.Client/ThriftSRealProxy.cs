@@ -112,7 +112,7 @@ namespace ThriftS.Client
             string invokeDesc = string.Format("调用{0}契约的{1}方法", this.ServiceName, mcm.MethodName);
 
             // 构造请求
-            var xrequest = new ThriftSRequest()
+            var srequest = new ThriftSRequest()
             {
                 ServiceName = this.ServiceName,
                 MethodName = Utils.GetMethodName((MethodInfo)mcm.MethodBase),
@@ -120,11 +120,11 @@ namespace ThriftS.Client
                 Parameters = new List<ThriftSParameter>()
             };
 
-            xrequest.Uri = string.Format("thrift://{0}:{1}/{2}/{3}", this.Host, this.Port, this.ServiceShortName, xrequest.MethodName);
-            xrequest.Version = Utils.Version;
-            xrequest.ClientPid = this.ClientPid;
-            xrequest.ClientHostName = this.ClientHostName;
-            xrequest.ClientRuntime = ".NET " + Environment.Version.ToString();
+            srequest.Uri = string.Format("thrift://{0}:{1}/{2}/{3}", this.Host, this.Port, this.ServiceShortName, srequest.MethodName);
+            srequest.Version = Utils.Version;
+            srequest.ClientPid = this.ClientPid;
+            srequest.ClientHostName = this.ClientHostName;
+            srequest.ClientRuntime = ".NET " + Environment.Version.ToString();
 
             try
             {
@@ -170,11 +170,11 @@ namespace ThriftS.Client
                             parameter.Compression = ThriftSCompression.Gzip;
                         }
 
-                        xrequest.Parameters.Add(parameter);
+                        srequest.Parameters.Add(parameter);
                     }
                 }
 
-                ThriftSResponse xresponse = null;
+                ThriftSResponse sresponse = null;
                 try
                 {
                     var xpool = ConnectionPoolManager.GetPool(this.Host, this.Port, this.Timeout);
@@ -191,13 +191,13 @@ namespace ThriftS.Client
                             this.ClientIP = xconnection.LocalAddress.ToString();
                         }
 
-                        xrequest.ClientIP = this.ClientIP;
-                        xresponse = xconnection.Client.Process(xrequest);
+                        srequest.ClientIP = this.ClientIP;
+                        sresponse = xconnection.Client.Process(srequest);
                     }
                     catch (SocketException exception)
                     {
                         xpool.ReportError(xconnection, exception);
-                        this.HandleException("SocketException", invokeDesc, xrequest, exception);
+                        this.HandleException("SocketException", invokeDesc, srequest, exception);
                     }
                     catch (IOException exception)
                     {
@@ -205,10 +205,10 @@ namespace ThriftS.Client
                         var socketException = exception.InnerException as SocketException;
                         if (socketException != null)
                         {
-                            this.HandleException("SocketException", invokeDesc, xrequest, socketException);
+                            this.HandleException("SocketException", invokeDesc, srequest, socketException);
                         }
 
-                        this.HandleException("IOException", invokeDesc, xrequest, exception);
+                        this.HandleException("IOException", invokeDesc, srequest, exception);
                     }
                     catch (TTransportException exception)
                     {
@@ -222,18 +222,18 @@ namespace ThriftS.Client
                             this.HandleException(
                                 "TTransportException", 
                                 invokeDesc, 
-                                xrequest,
+                                srequest,
                                 new TTransportException(exception.Type, "Service unavailable."));
                         }
                         else
                         {
-                            this.HandleException("TTransportException", invokeDesc, xrequest, exception);
+                            this.HandleException("TTransportException", invokeDesc, srequest, exception);
                         }
                     }
                     catch (TProtocolException exception)
                     {
                         xpool.ReportError(xconnection, exception);
-                        this.HandleException("TProtocolException", invokeDesc, xrequest, exception);
+                        this.HandleException("TProtocolException", invokeDesc, srequest, exception);
                     }
                     finally
                     {
@@ -242,23 +242,23 @@ namespace ThriftS.Client
                     }
 
                     // 非void且result非空
-                    if (xresponse != null && xresponse.Result != null)
+                    if (sresponse != null && sresponse.Result != null)
                     {
                         // 解压
-                        if (xresponse.Result.Compression == ThriftSCompression.Gzip)
+                        if (sresponse.Result.Compression == ThriftSCompression.Gzip)
                         {
-                            xresponse.Result.Data = Utils.GzipUnCompress(xresponse.Result.Data);
+                            sresponse.Result.Data = Utils.GzipUnCompress(sresponse.Result.Data);
                         }
 
-                        if (xresponse.Result.ContentType == ContentTypes.Thrift)
+                        if (sresponse.Result.ContentType == ContentTypes.Thrift)
                         {
                             returnValue = ThriftSerializer.Deserialize(
                                 ((MethodInfo)mcm.MethodBase).ReturnType,
-                                xresponse.Result.Data);
+                                sresponse.Result.Data);
                         }
                         else
                         {
-                            throw new NotSupportedException(string.Format("Not supported content type: {0}", xresponse.Result.ContentType)); 
+                            throw new NotSupportedException(string.Format("Not supported content type: {0}", sresponse.Result.ContentType)); 
                         }
                     }
 
@@ -267,14 +267,14 @@ namespace ThriftS.Client
                 }
                 catch (TApplicationException tapplicationException)
                 {
-                    var info = string.Format("tapplication exception on calling {0}. ", xrequest.Uri);
+                    var info = string.Format("tapplication exception on calling {0}. ", srequest.Uri);
                     var exception = new ThriftSException(info + tapplicationException.Message, tapplicationException);
 
                     returnMessage = new ReturnMessage(exception, mcm);
                 }
                 catch (BadRequestException badRequestException)
                 {
-                    var info = string.Format("Bad request exception on calling {0}. ", xrequest.Uri);
+                    var info = string.Format("Bad request exception on calling {0}. ", srequest.Uri);
                     var exception = new ThriftSException(
                         info + badRequestException.ErrorMessage,
                         info + Environment.NewLine + badRequestException.ErrorMessage);
@@ -284,7 +284,7 @@ namespace ThriftS.Client
                 }
                 catch (InternalServerException internalServerException)
                 {
-                    var info = string.Format("Server internal exception on calling {0}. ", xrequest.Uri);
+                    var info = string.Format("Server internal exception on calling {0}. ", srequest.Uri);
                     var exception = new ThriftSException(
                         info + internalServerException.ErrorMessage,
                         info + Environment.NewLine + internalServerException.ErrorDescription);
@@ -293,7 +293,7 @@ namespace ThriftS.Client
                 }
                 catch (InvocationException invocationException)
                 {
-                    var info = string.Format("Server invocation exception on calling {0}. ", xrequest.Uri);
+                    var info = string.Format("Server invocation exception on calling {0}. ", srequest.Uri);
                     var exception = new ThriftSException(
                         info + invocationException.ErrorMessage,
                         info + Environment.NewLine + invocationException.ErrorDescription);
@@ -302,7 +302,7 @@ namespace ThriftS.Client
                 }
                 catch (Exception exception)
                 {
-                    this.HandleException("Exception", invokeDesc, xrequest, exception);
+                    this.HandleException("Exception", invokeDesc, srequest, exception);
                 }
             }
             finally

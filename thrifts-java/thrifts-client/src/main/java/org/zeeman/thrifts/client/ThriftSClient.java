@@ -1,6 +1,9 @@
 package org.zeeman.thrifts.client;
 
+import org.apache.commons.lang3.StringUtils;
+import org.zeeman.thrifts.common.ThriftSException;
 import org.zeeman.thrifts.common.Utils;
+import org.zeeman.thrifts.common.annotations.ThriftSContract;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
@@ -63,32 +66,32 @@ public class ThriftSClient {
     /**
      * Create proxy
      *
-     * @param serviceInterface
+     * @param contractType
      * @return
      */
-    public Object createProxy(Class serviceInterface) {
-        String serviceName = "";//Utils.getServiceName(typeof(T));
+    public Object createProxy(Class<?> contractType) throws ThriftSException {
+        ThriftSContract contractAnnotation = contractType.getAnnotation(ThriftSContract.class);
+        if (contractAnnotation == null) {
+            throw new ThriftSException(String.format("Missing annotation(ThriftXContract) in '%s'.", contractType.getName()));
+        }
+
+        String serviceName = Utils.getServiceName(contractType);
         String serviceShortName = serviceName;
+
+        if (StringUtils.isEmpty(serviceName))
+        {
+            //serviceName = typeof(T).FullName;
+            serviceShortName = contractType.getName();
+        }
+
+        System.out.println(serviceName);
 
         InvocationHandler handler = new ThriftSRealProxy(this.getHost(),
                 this.getPort(), serviceName, serviceShortName, this.getTimeout());
 
         return Proxy.newProxyInstance(handler.getClass().getClassLoader(),
-                new Class[]{serviceInterface}, handler);
-        /*
-        if (typeof(T).IsDefined(typeof(ThriftSContractAttribute), false) == false)
-        {
-            throw new ThriftSException(string.Format("Missing ThriftSContractAttribute in '{0}'.", typeof(T)));
-        }
+                new Class[]{contractType}, handler);
 
-        var serviceName = Utils.GetServiceName(typeof(T));
-        var serviceShortName = serviceName;
-        if (string.IsNullOrEmpty(serviceName))
-        {
-            serviceName = typeof(T).FullName;
-            serviceShortName = typeof(T).Name;
-        }
-        */
     }
 
 }

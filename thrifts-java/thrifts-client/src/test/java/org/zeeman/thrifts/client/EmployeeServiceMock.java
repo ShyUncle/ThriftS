@@ -3,8 +3,8 @@ package org.zeeman.thrifts.client;
 import org.zeeman.thrifts.common.annotations.ThriftSContract;
 import org.zeeman.thrifts.common.annotations.ThriftSOperation;
 
-@ThriftSContract
+@ThriftSContract(serviceName = "EmployeeService")
 public interface EmployeeServiceMock {
     @ThriftSOperation
-    String getString();
+    String bigString(String text);
 }
