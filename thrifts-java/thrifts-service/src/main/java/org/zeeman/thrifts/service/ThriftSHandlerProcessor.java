@@ -3,13 +3,15 @@ package org.zeeman.thrifts.service;
 //import com.baidu.bjf.remoting.protobuf.Codec;
 //import com.baidu.bjf.remoting.protobuf.ProtobufProxy;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zeeman.thrifts.common.*;
 import org.zeeman.thrifts.idl.*;
 import org.zeeman.thrifts.serializer.ThriftSerializer;
 import com.fasterxml.classmate.ResolvedType;
 import com.fasterxml.classmate.TypeResolver;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+//import com.google.gson.Gson;
+//import com.google.gson.GsonBuilder;
 import org.apache.thrift.TException;
 
 import java.io.ByteArrayInputStream;
@@ -21,7 +23,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
-    private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+    private final static Logger LOGGER = LoggerFactory.getLogger(ThriftSHandlerProcessor.class);
+
+    //private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
     public ThriftSHandlerProcessor() {
 
@@ -57,7 +61,7 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
         }
 
         ThriftSRequestWrapper thriftSRequestWrapper = new ThriftSRequestWrapper(request);
-        ThriftSEnvirnment.getLogger().Debug("Accept request: %s", thriftSRequestWrapper.getUri());
+        LOGGER.debug("Accept request: {}", thriftSRequestWrapper.getUri());
 
         ServiceMetaInfo serviceMetadata = LocalCache.ServiceMap.get(request.getServiceName()).get(request.MethodName);
 
@@ -109,7 +113,7 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
                             Codec protoCodec = ProtobufProxy.create(parameterType);
                             invokeParameters.put(parameterType.getName(),protoCodec.decode(requestParameter.getValue()));
                         }else*/
-                        if (requestParameter.getContentType().equalsIgnoreCase(ContentTypes.Json)) {
+                        /*if (requestParameter.getContentType().equalsIgnoreCase(ContentTypes.Json)) {
                             ByteArrayInputStream inputStream = new ByteArrayInputStream(requestParameter.getValue());
                             try {
                                 InputStreamReader reader = new InputStreamReader(inputStream);
@@ -117,7 +121,9 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
                             } finally {
                                 inputStream.close();
                             }
-                        } else if (requestParameter.getContentType().equalsIgnoreCase(ContentTypes.Thrift)) {
+                        } else */
+
+                        if (requestParameter.getContentType().equalsIgnoreCase(ContentTypes.Thrift)) {
 
                             TypeResolver typeResolver = new TypeResolver();
                             ResolvedType ptype = null;
@@ -163,7 +169,7 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
             //调用服务
             try {
                 result = serviceMetadata.getMethod().invoke(service, invokeParameters.values().toArray());
-                System.out.println(result);
+                LOGGER.debug(result.toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -211,12 +217,11 @@ class ThriftSHandlerProcessor implements ThriftSHandler.Iface {
                     } else if (mode == SerializerMode.Thrift) {
                         xResult.setContentType(ContentTypes.Thrift);
                         xResult.setData(ThriftSerializer.Serialize(result));
-                    } else {
+                    }/* else {
                         //Json序列化
-                        //todo: json-smart
                         xResult.setContentType(ContentTypes.Json);
                         xResult.setData(gson.toJson(result).getBytes());
-                    }
+                    }*/
                     xResponse.setResult(xResult);
                 }
             }

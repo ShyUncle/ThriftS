@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.zeeman.thrifts.common.ThriftSException;
 import org.zeeman.thrifts.common.Utils;
 import org.zeeman.thrifts.common.annotations.ThriftSContract;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
@@ -12,6 +14,8 @@ import java.lang.reflect.Proxy;
  * ThriftS client
  */
 public class ThriftSClient {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ThriftSClient.class);
+
     private String host;
     private int port;
     private int timeout;
@@ -78,13 +82,12 @@ public class ThriftSClient {
         String serviceName = Utils.getServiceName(contractType);
         String serviceShortName = serviceName;
 
-        if (StringUtils.isEmpty(serviceName))
-        {
+        if (StringUtils.isEmpty(serviceName)) {
             //serviceName = typeof(T).FullName;
             serviceShortName = contractType.getName();
         }
 
-        System.out.println(serviceName);
+        LOGGER.debug("find service: {}", serviceName);
 
         InvocationHandler handler = new ThriftSRealProxy(this.getHost(),
                 this.getPort(), serviceName, serviceShortName, this.getTimeout());

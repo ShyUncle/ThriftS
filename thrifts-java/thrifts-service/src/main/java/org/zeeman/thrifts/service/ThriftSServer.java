@@ -106,8 +106,8 @@ public class ThriftSServer {
 
         this.multiplexedProcessor.registerProcessor("ThriftSHandler", new ThriftSHandler.Processor(new ThriftSHandlerProcessor()));
 
-        ThriftSEnvirnment.getLogger().Info(
-                "Starting thriftS server. ThriftPort:%s, HttpPort:%s, Version:%s",
+        LOGGER.info(
+                "Starting thriftS server. ThriftPort:{}, HttpPort:{}, Version:{}",
                 thriftPort,
                 httpPort,
                 Utils.getVersion());
