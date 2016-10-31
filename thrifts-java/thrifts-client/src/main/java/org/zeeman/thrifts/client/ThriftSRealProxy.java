@@ -9,6 +9,8 @@ import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TSocket;
 import org.zeeman.thrifts.common.ContentTypes;
 import org.zeeman.thrifts.common.ThriftSException;
+import org.zeeman.thrifts.common.ThriftSRequestWrapper;
+import org.zeeman.thrifts.common.Utils;
 import org.zeeman.thrifts.idl.*;
 import org.zeeman.thrifts.serializer.ThriftSerializer;
 
@@ -24,11 +26,11 @@ import java.util.HashMap;
 public class ThriftSRealProxy implements InvocationHandler {
 
     private String host;
-    private int port;
+    private Integer port;
     private String serviceName;
     private String serviceShortName;
-    private int timeout;
-    private int clientPid;
+    private Integer timeout;
+    private Integer clientPid;
     private String clientIp;
     private String clientHostName;
 
@@ -40,11 +42,11 @@ public class ThriftSRealProxy implements InvocationHandler {
         this.host = host;
     }
 
-    public int getPort() {
+    public Integer getPort() {
         return port;
     }
 
-    public void setPort(int port) {
+    public void setPort(Integer port) {
         this.port = port;
     }
 
@@ -64,19 +66,19 @@ public class ThriftSRealProxy implements InvocationHandler {
         this.serviceShortName = serviceShortName;
     }
 
-    public int getTimeout() {
+    public Integer getTimeout() {
         return timeout;
     }
 
-    public void setTimeout(int timeout) {
+    public void setTimeout(Integer timeout) {
         this.timeout = timeout;
     }
 
-    public int getClientPid() {
+    public Integer getClientPid() {
         return clientPid;
     }
 
-    public void setClientPid(int clientPid) {
+    public void setClientPid(Integer clientPid) {
         this.clientPid = clientPid;
     }
 
@@ -102,8 +104,8 @@ public class ThriftSRealProxy implements InvocationHandler {
         this.setServiceName(serviceName);
         this.setServiceShortName(serviceShortName);
         this.setTimeout(timeout);
-        //this.setClientPid();
-        //this.setClientHostName();
+        this.setClientPid(Utils.getPid());
+        this.setClientHostName(Utils.getHostName());
     }
 
     public Object invoke(Object object, Method method, Object[] args) throws Throwable {
@@ -113,13 +115,12 @@ public class ThriftSRealProxy implements InvocationHandler {
         sRequest.setHeaders(new HashMap<String, String>());
         sRequest.setParameters(new ArrayList<ThriftSParameter>());
 
-        /*
-        srequest.Uri = string.Format("thrift://{0}:{1}/{2}/{3}", this.Host, this.Port, this.ServiceShortName, srequest.MethodName);
-        srequest.Version = Utils.Version;
-        srequest.ClientPid = this.ClientPid;
-        srequest.ClientHostName = this.ClientHostName;
-        srequest.ClientRuntime = "Java " + Environment.Version.ToString();
-        * */
+        ThriftSRequestWrapper thriftSRequestWrapper = new ThriftSRequestWrapper(sRequest);
+        thriftSRequestWrapper.setUri(String.format("thrift://%s:%s/%s/%s", this.getHost(), this.getPort(), this.getServiceShortName(), sRequest.getMethodName()));
+        thriftSRequestWrapper.setVersion(Utils.getVersion());
+        thriftSRequestWrapper.setClientPid(this.getClientPid().toString());
+        thriftSRequestWrapper.setClientHostName(this.getClientHostName());
+        thriftSRequestWrapper.setClientRuntime("Java ");//Environment.Version.ToString();
 
         if (args != null && args.length > 0) {
             for (byte i = 0; i < args.length; i++) {

@@ -12,6 +12,14 @@ import org.zeeman.thrifts.demo.contract.EmployeeService;
 public class EmployeeClient {
     private final static Logger LOGGER = LoggerFactory.getLogger(EmployeeClient.class);
 
+    public static void main(String[] args) {
+        try {
+            StringTest();
+        } catch (ThriftSException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void StringTest() throws ThriftSException {
         ThriftSClient thriftSClient = new ThriftSClient("127.0.0.1", 8384);
         EmployeeService employeeService = (EmployeeService) thriftSClient.createProxy(EmployeeService.class);

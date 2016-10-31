@@ -3,6 +3,11 @@ package org.zeeman.thrifts.common;
 import org.apache.commons.lang3.StringUtils;
 import org.zeeman.thrifts.common.annotations.ThriftSContract;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public final class Utils {
     private static String version;
 
@@ -10,12 +15,11 @@ public final class Utils {
         version = "0.6";
     }
 
-    public static String getVersion()
-    {
+    public static String getVersion() {
         return version;
     }
 
-    public static String getServiceName(Class<? extends Object> contractType){
+    public static String getServiceName(Class<? extends Object> contractType) {
         String serviceName = StringUtils.EMPTY;
 
         ThriftSContract contractAnnotation = contractType.getAnnotation(ThriftSContract.class);
@@ -58,5 +62,24 @@ public final class Utils {
         //}
 
         return SerializerMode.Json;*/
+    }
+
+    public static Integer getPid() {
+        //获取进程的PID
+        RuntimeMXBean runtime = ManagementFactory.getRuntimeMXBean();
+        String name = runtime.getName(); // format: "pid@hostname"
+        try {
+            return Integer.parseInt(name.substring(0, name.indexOf('@')));
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
+    public static String getHostName() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            return StringUtils.EMPTY;
+        }
     }
 }

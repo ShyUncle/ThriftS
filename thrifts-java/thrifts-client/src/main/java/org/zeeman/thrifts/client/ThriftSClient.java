@@ -83,8 +83,8 @@ public class ThriftSClient {
         String serviceShortName = serviceName;
 
         if (StringUtils.isEmpty(serviceName)) {
-            //serviceName = typeof(T).FullName;
-            serviceShortName = contractType.getName();
+            serviceName = contractType.getName();
+            serviceShortName = contractType.getSimpleName();
         }
 
         LOGGER.debug("find service: {}", serviceName);
