@@ -24,7 +24,7 @@ final class TypeExtension {
         //    return TType.Void;
         //}else
 
-        if(type.getTypeParameters().size()>0) {
+        if (type.getTypeParameters().size() > 0) {
             if (isList(type.getErasedType())) {
                 return TType.LIST;
             } else {

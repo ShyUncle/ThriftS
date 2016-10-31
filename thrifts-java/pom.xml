@@ -13,6 +13,7 @@
     <modules>
         <module>thrifts-common</module>
         <module>thrifts-serializer</module>
+        <module>thrifts-client</module>
         <module>thrifts-service</module>
         <module>thrifts-demo</module>
     </modules>
@@ -22,6 +23,12 @@
             <groupId>org.apache.thrift</groupId>
             <artifactId>libthrift</artifactId>
             <version>0.9.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.5</version>
         </dependency>
 
         <dependency>

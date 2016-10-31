@@ -108,6 +108,7 @@ namespace ThriftS.Common
             using (var zs = new GZipStream(ms, CompressionMode.Compress))
             {
                 zs.Write(buffer, 0, buffer.Length);
+                zs.Close();//必须关闭
                 return ms.ToArray();
             }
         }

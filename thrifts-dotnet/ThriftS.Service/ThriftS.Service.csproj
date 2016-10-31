@@ -63,7 +63,9 @@
     <Compile Include="ThriftSServer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ThriftS.config" />
+    <None Include="ThriftS.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThriftS.Common\ThriftS.Common.csproj">

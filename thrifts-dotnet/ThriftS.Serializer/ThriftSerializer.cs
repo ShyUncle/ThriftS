@@ -46,6 +46,13 @@ namespace ThriftS.Serializer
 
                 instance = Activator.CreateInstance(genericMapType, instance);
             }
+            else if (type.IsArray)
+            {
+                var genericType = type.GetElementType();
+                var genericListType = typeof(ArrayContainer<>).MakeGenericType(genericType);
+
+                instance = Activator.CreateInstance(genericListType, instance);
+            }
 
             using (var stream = new MemoryStream())
             using (var transport = new TStreamTransport(null, stream))
@@ -66,6 +73,7 @@ namespace ThriftS.Serializer
             }
 
             var isContainer = false;
+            var isArray = false;
             if (type.IsValueType
                 || type == typeof (string)
                 || type == typeof (byte[]))
@@ -88,6 +96,13 @@ namespace ThriftS.Serializer
                 type = typeof(MapContainer<,>).MakeGenericType(genericTypeKey, genericTypeValue);
                 isContainer = true;
             }
+            else if (type.IsArray)
+            {
+                var genericType = type.GetElementType();
+                type = typeof(ArrayContainer<>).MakeGenericType(genericType);
+                isContainer = true;
+                isArray = true;
+            }
 
             using (var stream = new MemoryStream(buffer))
             using (var transport = new TStreamTransport(stream, null))
@@ -97,7 +112,14 @@ namespace ThriftS.Serializer
 
                 if(isContainer)
                 {
-                    return type.GetProperty("Value").GetValue(result);
+                    if (isArray)
+                    {
+                        return type.GetProperty("TValue").GetValue(result);
+                    }
+                    else
+                    {
+                        return type.GetProperty("Value").GetValue(result);
+                    }
                 }
                 return result;
             }

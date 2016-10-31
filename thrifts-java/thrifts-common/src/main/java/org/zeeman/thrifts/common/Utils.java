@@ -1,5 +1,8 @@
 package org.zeeman.thrifts.common;
 
+import org.apache.commons.lang3.StringUtils;
+import org.zeeman.thrifts.common.annotations.ThriftSContract;
+
 public final class Utils {
     private static String version;
 
@@ -12,7 +15,22 @@ public final class Utils {
         return version;
     }
 
-    public static SerializerMode GetSerializerMode(Class<? extends Object> targetType) {
+    public static String getServiceName(Class<? extends Object> contractType){
+        String serviceName = StringUtils.EMPTY;
+
+        ThriftSContract contractAnnotation = contractType.getAnnotation(ThriftSContract.class);
+        if (contractAnnotation != null) {
+            serviceName = contractAnnotation.serviceName();
+        }
+
+        if (serviceName == null || serviceName.isEmpty()) {
+            serviceName = contractType.getName();
+        }
+
+        return serviceName;
+    }
+
+    public static SerializerMode getSerializerMode(Class<? extends Object> targetType) {
         return SerializerMode.Thrift;
 
         /*

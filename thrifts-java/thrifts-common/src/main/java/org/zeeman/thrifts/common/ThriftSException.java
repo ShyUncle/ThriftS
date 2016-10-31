@@ -6,6 +6,6 @@ public class ThriftSException extends Exception {
     }
 
     public ThriftSException(String message, Exception innerException) {
-        super(message,innerException);
+        super(message, innerException);
     }
 }
